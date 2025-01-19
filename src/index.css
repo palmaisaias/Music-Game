@@ -1,38 +1,53 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #121212; /* Darker for better contrast */
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Additional Theme Variables */
+  --primary-color: #646cff;
+  --secondary-color: #535bf2;
+  --button-hover-color: #4b59c8;
+  --background-light: #ffffff;
+  --background-dark: #242424;
 }
 
 a {
   font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color 0.3s;
 }
 a:hover {
-  color: #535bf2;
+  color: var(--secondary-color);
 }
 
 body {
   margin: 0;
   display: flex;
-  place-items: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* Adjusted for Blockly workspace */
   min-width: 320px;
   min-height: 100vh;
+  background-color: var(--background-dark);
+  color: rgba(255, 255, 255, 0.87);
+  overflow: hidden; /* Prevent unwanted scrolling */
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  font-size: 2.5em;
+  line-height: 1.2;
+  margin: 1em 0;
+  text-align: center;
 }
 
 button {
@@ -42,27 +57,56 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--background-dark);
+  color: rgba(255, 255, 255, 0.87);
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: border-color 0.25s, background-color 0.25s, color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: var(--primary-color);
+  background-color: var(--button-hover-color);
+  color: #fff;
 }
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+.blockly-container {
+  width: 100%;
+  height: 70vh; /* Adjust for full-screen feel */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--background-light);
+  border: 1px solid var(--primary-color);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 2em auto;
+}
+
+.blockly-toolbox {
+  background-color: var(--background-dark);
+  color: rgba(255, 255, 255, 0.87);
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
-    background-color: #ffffff;
+    background-color: var(--background-light);
   }
   a:hover {
     color: #747bff;
   }
   button {
     background-color: #f9f9f9;
+    color: #213547;
+  }
+  .blockly-container {
+    background-color: var(--background-light);
+  }
+  .blockly-toolbox {
+    background-color: #f0f0f0;
+    color: #000;
   }
 }
