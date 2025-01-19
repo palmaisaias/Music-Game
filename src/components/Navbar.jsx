@@ -2,6 +2,8 @@
 import React from 'react';
 
 const Navbar = () => {
+  console.log('Rendering Navbar component...'); // Log for rendering the Navbar
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">

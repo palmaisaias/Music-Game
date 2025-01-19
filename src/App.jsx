@@ -9,10 +9,21 @@ import * as Blockly from 'blockly/core'; // Ensure Blockly is imported for JavaS
 const App = () => {
   const [code, setCode] = useState(''); // State to store generated Blockly code
 
+  console.log('Rendering App component...'); // Debug log for App rendering
+
   const generateCode = () => {
+    console.log('Generate Code button clicked.'); // Debug log for button click
+
     if (Blockly.JavaScript) {
-      const workspaceCode = Blockly.JavaScript.workspaceToCode(); // Generate code from workspace
-      setCode(workspaceCode);
+      try {
+        const workspaceCode = Blockly.JavaScript.workspaceToCode(); // Generate code from workspace
+        console.log('Generated Blockly code:', workspaceCode); // Log the generated code
+        setCode(workspaceCode);
+      } catch (error) {
+        console.error('Error generating Blockly code:', error); // Log generation errors
+      }
+    } else {
+      console.error('Blockly.JavaScript is not available!'); // Log if JavaScript generator is missing
     }
   };
 

@@ -7,22 +7,31 @@ const BlocklyArea = () => {
   const workspace = useRef(null);
 
   useEffect(() => {
+    console.log('Initializing Blockly workspace...'); // Debug log for initialization
+
     // Initialize the Blockly workspace
-    workspace.current = Blockly.inject(blocklyDiv.current, {
-      toolbox: `
-        <xml>
-          <block type="controls_repeat"></block>
-          <block type="math_number"></block>
-          <block type="text"></block>
-          <block type="music_note"></block>
-        </xml>
-      `,
-    });
+    try {
+      workspace.current = Blockly.inject(blocklyDiv.current, {
+        toolbox: `
+          <xml>
+            <block type="controls_repeat"></block>
+            <block type="math_number"></block>
+            <block type="text"></block>
+            <block type="music_note"></block>
+          </xml>
+        `,
+      });
+      console.log('Blockly workspace initialized successfully.'); // Success log
+    } catch (error) {
+      console.error('Error initializing Blockly workspace:', error); // Error handling
+    }
 
     return () => {
       // Dispose of the workspace on component unmount
       if (workspace.current) {
+        console.log('Disposing Blockly workspace...'); // Debug log for cleanup
         workspace.current.dispose();
+        console.log('Blockly workspace disposed.'); // Success log for cleanup
       }
     };
   }, []);

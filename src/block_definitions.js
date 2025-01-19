@@ -1,6 +1,9 @@
 import * as Blockly from 'blockly/core';
-import 'blockly/javascript';  // Import the JavaScript code generator
+import 'blockly/javascript'; // Import the JavaScript generator
 
+console.log('Initializing custom block definitions...'); // Log for initialization
+
+// Define custom blocks
 Blockly.defineBlocksWithJsonArray([
   {
     type: 'music_note',
@@ -35,8 +38,18 @@ Blockly.defineBlocksWithJsonArray([
   },
 ]);
 
-Blockly.JavaScript['music_note'] = function (block) {
-  const note = block.getFieldValue('NOTE');
-  const duration = block.getFieldValue('DURATION');
-  return `play('${note}', ${duration});\n`;
-};
+// Debug: Confirm block definition
+console.log('Custom block "music_note" defined:', Blockly.Blocks['music_note']);
+
+// Check if Blockly.JavaScript is loaded
+if (Blockly.JavaScript) {
+  console.log('Blockly.JavaScript is available. Assigning generator for "music_note".');
+  Blockly.JavaScript['music_note'] = function (block) {
+    const note = block.getFieldValue('NOTE');
+    const duration = block.getFieldValue('DURATION');
+    console.log(`Generating code for note "${note}" with duration ${duration}.`);
+    return `play('${note}', ${duration});\n`;
+  };
+} else {
+  console.error('Error: Blockly.JavaScript is not available!');
+}
