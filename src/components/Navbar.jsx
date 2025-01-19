@@ -1,5 +1,6 @@
 // File: components/Navbar.jsx
 import React from 'react';
+import 'blockly/javascript';
 
 const Navbar = () => {
   console.log('Rendering Navbar component...'); // Log for rendering the Navbar

@@ -1,7 +1,8 @@
 import * as Blockly from 'blockly/core';
+import 'blockly/blocks'; // Import default Blockly blocks
 import 'blockly/javascript'; // Import the JavaScript generator
 
-console.log('Initializing custom block definitions...'); // Log for initialization
+console.log('Initializing custom block definitions...');
 
 // Define custom blocks
 Blockly.defineBlocksWithJsonArray([
