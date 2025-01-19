@@ -1,17 +1,23 @@
 import React from 'react';
 import * as Tone from 'tone';
-import 'blockly/javascript';
 
 const MusicPlayer = ({ code }) => {
-  const playMusic = () => {
+  const playMusic = async () => {
     if (!code) {
-      console.warn('No code to play. Please generate some Blockly code first.'); // Warning if no code
+      console.warn('No code to play. Please generate some Blockly code first.');
       return;
     }
 
-    console.log('Playing music with generated code:', code); // Debug log for code playback
+    console.log('Playing music with generated code:', code);
 
     try {
+      // Ensure AudioContext starts only after user gesture
+      if (Tone.context.state !== 'running') {
+        console.log('Resuming AudioContext...');
+        await Tone.start();
+        console.log('AudioContext resumed.');
+      }
+
       const synth = new Tone.Synth().toDestination();
       const lines = code.split('\n');
 
@@ -20,17 +26,17 @@ const MusicPlayer = ({ code }) => {
         const match = line.match(/play\('([^']+)'\s*,\s*([\d.]+)\)/);
         if (match) {
           const [, note, duration] = match;
-          console.log(`Playing note: ${note}, duration: ${duration}, time offset: ${time}`); // Log each note
+          console.log(`Playing note: ${note}, duration: ${duration}, time offset: ${time}`);
           synth.triggerAttackRelease(note, parseFloat(duration), Tone.now() + time);
           time += parseFloat(duration);
         } else {
-          console.warn('Unrecognized line in generated code:', line); // Log unrecognized lines
+          console.warn('Unrecognized line in generated code:', line);
         }
       });
 
       console.log('Music playback completed.');
     } catch (error) {
-      console.error('Error during music playback:', error); // Log playback errors
+      console.error('Error during music playback:', error);
     }
   };
 

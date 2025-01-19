@@ -1,6 +1,6 @@
 import * as Blockly from 'blockly/core';
-import 'blockly/blocks'; // Import default Blockly blocks
-import 'blockly/javascript'; // Import the JavaScript generator
+import 'blockly/blocks'; // Default blocks
+import 'blockly/javascript'; // JavaScript generator
 
 console.log('Initializing custom block definitions...');
 
@@ -42,15 +42,17 @@ Blockly.defineBlocksWithJsonArray([
 // Debug: Confirm block definition
 console.log('Custom block "music_note" defined:', Blockly.Blocks['music_note']);
 
-// Check if Blockly.JavaScript is loaded
-if (Blockly.JavaScript) {
-  console.log('Blockly.JavaScript is available. Assigning generator for "music_note".');
-  Blockly.JavaScript['music_note'] = function (block) {
-    const note = block.getFieldValue('NOTE');
-    const duration = block.getFieldValue('DURATION');
-    console.log(`Generating code for note "${note}" with duration ${duration}.`);
-    return `play('${note}', ${duration});\n`;
-  };
-} else {
-  console.error('Error: Blockly.JavaScript is not available!');
-}
+// Ensure Blockly.JavaScript is loaded
+setTimeout(() => {
+  if (typeof Blockly.JavaScript !== 'undefined') {
+    console.log('Blockly.JavaScript is available. Assigning generator for "music_note".');
+    Blockly.JavaScript['music_note'] = function (block) {
+      const note = block.getFieldValue('NOTE');
+      const duration = block.getFieldValue('DURATION');
+      console.log(`Generating code for note "${note}" with duration ${duration}.`);
+      return `play('${note}', ${duration});\n`;
+    };
+  } else {
+    console.error('Error: Blockly.JavaScript is not available!');
+  }
+}, 0); // Delay ensures generator is available

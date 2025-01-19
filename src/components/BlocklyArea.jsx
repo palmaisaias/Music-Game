@@ -1,7 +1,23 @@
 import React, { useRef, useEffect } from 'react';
 import * as Blockly from 'blockly/core';
+import 'blockly/blocks';
 import 'blockly/javascript';
 import '../block_definitions'; // Import custom block definitions
+
+const toolbox = `
+  <xml>
+    <block type="controls_repeat">
+      <value name="TIMES">
+        <shadow type="math_number">
+          <field name="NUM">10</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="math_number"></block>
+    <block type="text"></block>
+    <block type="music_note"></block>
+  </xml>
+`;
 
 const BlocklyArea = () => {
   const blocklyDiv = useRef(null);
@@ -12,16 +28,7 @@ const BlocklyArea = () => {
 
     // Initialize the Blockly workspace
     try {
-      workspace.current = Blockly.inject(blocklyDiv.current, {
-        toolbox: `
-          <xml>
-            <block type="controls_repeat"></block>
-            <block type="math_number"></block>
-            <block type="text"></block>
-            <block type="music_note"></block>
-          </xml>
-        `,
-      });
+      workspace.current = Blockly.inject(blocklyDiv.current, { toolbox });
       console.log('Blockly workspace initialized successfully.'); // Success log
     } catch (error) {
       console.error('Error initializing Blockly workspace:', error); // Error handling
